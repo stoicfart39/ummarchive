@@ -1,4 +1,4 @@
-# Comprehensive Camera Matching Guide (showfloor)
+# Comprehensive camera matching guide (showfloor)
  
 This guide covers using Blender to manually recreate the camera angles seen in clean feed Shoshinkai/B-roll footage. 
 The end goal is to have a camera within Blender at the same coordinates as the original footage, which can then be 
@@ -10,9 +10,9 @@ All video sources need to be corrected so that they fall within the same bounds 
 Skipping this step and trying to match against an uncorrected clip will give you incorrect results.
 I've taken the time to document every clean feed video source and its corrected dimensions in 1440x1080 below - 
 if a source here isn't listed, open a pull request or message me on Discord (@stoicfart39)
-
+ 
 For quick resizing and repositioning of video clips, run:
-
+ 
 ```
 ffmpeg -i "input" -filter_complex "color=size=1440x1080:c=black[bg];[0:v]scale=w:h[v];[bg][v]overlay=x:y" "output"
 ```
@@ -44,39 +44,82 @@ Sources are listed alphabetically. Entries marked `?` are uncertain.
 | 1390×1027 | 15, 9 | [SuperMarioStadium2] |
 | 1854×1022 | -210, 9 | [スーパーマリオ・スタジアム3 / SuperMarioStadium3] |
  
-### Not yet corrected:
- 
+Not yet corrected:
 - ワールドビジネスサテライト (World Business Satellite) 1995年12月
 - トゥナイト2 (Tonight 2) 1995年12月 次世代ゲーム機 (Next Generation Game Console)
 - Games World S1E06
 - Bad Influence S4E13?
 - La Saga Miyamoto
 - Cyberflash #32, #55, #170
-
-## Step 2: 
-
+  
+## Step 2: Find rough camera positions
 We will branch into 2 paths here (a, b). Both have unique applications.
-
-### a) Find rough camera position using in-game display
  
+### a) Find camera position & rotation using in-game display
 *The following instructions assume you have a local clone of the showfloor repository set up and building.*
  
+This method is ideal for lining up stages with unchanged geometry between early and final builds (CG, DDD, LLL, WF, etc)
+
 To match the camera, we need to know where the in-game camera needs to sit to reproduce that framing. By default, you can't see camera coordinates,
 so we've set up an overlay and commented it out for ease of use.
  
 Open up `camera.c` and find:
  
 ```c
-// print_text_fmt_int(16, 48, "X %d", c->pos[0]);
-// print_text_fmt_int(16, 32, "Y %d", c->pos[1]);
-// print_text_fmt_int(16, 16, "Z %d", c->pos[2]);
+    // camera matching
+    /*
+    vec3f_get_dist_and_angle(c->focus, c->pos, &camDist, &camPitch, &camYaw);
+    
+    print_text_fmt_int(16, 48, "X%d", c->pos[0]);
+    print_text_fmt_int(16, 32, "Y%d", c->pos[2]);
+    print_text_fmt_int(16, 16, "Z%d", c->pos[1]);
+
+    print_text_fmt_int(96, 48, "X%d", 900 - (camPitch * 3600 / 0x10000));
+    print_text_fmt_int(96, 32, "Y%d", gLakituState.roll * 3600 / 0x10000);
+    print_text_fmt_int(96, 16, "Z%d", camYaw * 3600 / 0x10000);
+    */
+
 ```
  
-Uncomment all three lines and rebuild. This prints the camera's live X, Y, Z position to the bottom-left of the screen, updating in real time.
+Uncomment and rebuild. This prints the camera's live X, Y, Z position to the bottom-left of the screen, updating in real time.
  
 With that overlay active, boot showfloor and go to the level pictured in your reference. Put Mario in the same place as in the reference (or as close to the same place as possible) and rotate the camera until it matches. If the camera is being stubborn, center it, and then move perpendicularly to the area center to slowly turn in in your desired direction.
  
-Once the framing matches, note down the X, Y, Z values on screen; those are the coordinates for that shot. If you are on a flat surface, make SPECIAL note of the Y value, and ensure that you do not change it
+Once the framing matches, note down the X, Y, Z values on screen; those are the coordinates for that shot. If you are on a flat surface, make SPECIAL note of the Y value, and ensure that you do not change it.
+ 
+### b) Find camera rotation using fSpy
+ 
+This method is ideal for recreating completely unique geometry with no remnants in the final game or the gigaleak (e.g. Snow Slider, JRB, Ghost House)
+ 
+## Step 3: Bring the camera into Blender
+ 
+Regardless of which method you used in Step 2, the goal here is the same: end up with a camera in Blender positioned correctly relative to your reconstructed level geometry.
+ 
+### a) Use collected coordinates to recreate angle
 
-##
+- Navigate to the scene settings and set your resolution to any 4:3 resolution (e.g. 1440x1080)
+- Make sure your Blender is set to metric, (1 in-game unit is equal to 1 cm in Blender)
+
+- Create a new camera (Add > Camera)
+<img width="200" height="300" alt="image" src="https://github.com/user-attachments/assets/54157661-17f8-40e1-a6fc-8e98905217b9" />
+
+- In its settings, go to Lens, then change the lens unit from 'Milimeters' to 'Field of View'
+- If your FOV is confirmed in the table below, take note of the level your screenshot is sourced from. If it is not confirmed in the table below, assume it is 57.6°.
+- Under 'Background Images', click 'Add Image' and select your reference
+
+
+| Stage | FOV |
+|---|---|
+| Castle Courtyard | 57.6° |
+| Castle Grounds | 57.6° |
+| Castle Inside (Lobby) | 79.4° |
+| Castle Inside (Rooms) | 57.6° |
+| Firebubble Land | 57.6° |
+| Ghost House | 57.6° |
+| Mountain | 58.0° |
+| Snow Slider | 57.6° |
+| Water Land | 57.6° |
+
+
+### b) Import fSpy camera and adjust manually
  
