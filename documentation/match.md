@@ -85,25 +85,25 @@ game or the gigaleak (e.g. Snow Slider, JRB, Ghost House).
  
 ## a) Use collected coordinates to recreate angle
 
-- Ensure you have the Fast64 plugin installed in Blender
-- Navigate to the scene settings and set your resolution to any 4:3 resolution (e.g. 1440x1080)
-- Make sure your Blender is set to metric (1 in-game unit is equal to 1 cm in Blender)
+Ensure that you have the latest version of the Fast64 plugin installed, and that your Blender is set to metric 
+(1 in-game unit is equal to 1 cm in Blender). 
 
-- Create a new camera (Add > Camera) and select it
+Navigate to the scene settings and set your resolution to 1440x1080 (or any 4:3 resolution), then create a new 
+camera (Add > Camera) and select it
+
 <img width="200" height="300" alt="image" src="https://github.com/user-attachments/assets/54157661-17f8-40e1-a6fc-8e98905217b9" />
 
-- In its settings, go to Lens, then change the lens unit from 'Milimeters' to 'Field of View'
-- If you are aligning a shot of the castle lobby (not one of the rooms), set the FOV to 79.4°. If it's any other
-stage, use 57.8°
-- Under 'Background Images', click 'Add Image' and select your reference
-- Scroll down and ensure that "View as Render" is checked, opacity is set to 100%, and the image renders in FRONT
-of the model
-- In the transform tab, set the XYZ position and rotation to the values you previously collected
-- Keep in mind:
+In its settings, go to Lens, then change the lens unit from 'Milimeters' to 'Field of View'. If you are aligning 
+a shot of the castle lobby (not one of the rooms), set the FOV to 79.4°. If it's any other stage, use 57.8°. 
+Under 'Background Images', click 'Add Image' and select your reference. Scroll down and ensure that "View as Render" 
+is checked, opacity is set to 100%, and the image renders in FRONT of the model.
+
+In the transform tab, set the XYZ position and rotation to the values you previously collected.
+Keep in mind:
   
-  `XYZ position = n / 100`
+  - `XYZ position = n / 100`
   
-  `XYZ rotation = n / 10`
+  - `XYZ rotation = n / 10`
   
 <img width="450" height="180" alt="image" src="https://github.com/user-attachments/assets/aaf92f56-150b-4536-9c59-5cf4b51ca824" />
 
