@@ -104,22 +104,8 @@ Regardless of which method you used in Step 2, the goal here is the same: end up
 <img width="200" height="300" alt="image" src="https://github.com/user-attachments/assets/54157661-17f8-40e1-a6fc-8e98905217b9" />
 
 - In its settings, go to Lens, then change the lens unit from 'Milimeters' to 'Field of View'
-- If your FOV is confirmed in the table below, take note of the level your screenshot is sourced from. If it is not confirmed in the table below, assume it is 57.6°.
+- If you are aligning a shot of the castle lobby (not one of the rooms), set the FOV to 79.4°. If it's any other stage, use 57.8°.
 - Under 'Background Images', click 'Add Image' and select your reference
-
-
-| Stage | FOV |
-|---|---|
-| Castle Courtyard | 57.6° |
-| Castle Grounds | 57.6° |
-| Castle Inside (Lobby) | 79.4° |
-| Castle Inside (Rooms) | 57.6° |
-| Firebubble Land | 57.6° |
-| Ghost House | 57.6° |
-| Mountain | 58.0° |
-| Snow Slider | 57.6° |
-| Water Land | 57.6° |
-
 
 ### b) Import fSpy camera and adjust manually
  
