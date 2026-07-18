@@ -31,7 +31,7 @@ Sources are listed alphabetically. Entries marked `?` are uncertain.
 | 1424×1070 | 13, -25 | Bad Influence S4E11 (8:42) |
 | 1350×1000 | 42, 18 | Bad Influence S4E14 (9:36) |
 | 1430×1074 | 0, -21 | Bad Influence S4E14 (15:02) |
-| 1480×1092 | -8, -23 | Bravo TV - Nintendo 64 (Computermesse) (01-28-1996) (0:41, 1:06, 2:21, 2:26) |
+| 1480×1092 | -8, -23 | Bravo TV - Nintendo 64 (Computermesse) (01-28-1996) (0:41, 1:06, 2:21, 2:26, 4:23) |
 | 1431×1075 | VAR, -16 | C-Band Wild Feed |
 | 1858×1024 | -206, 16 | CNN Showbiz (12/24/95) (1:54, 2:58) |
 | 1478×1100 | -25, 2 | Cyber Flash #1 (2:40) |
