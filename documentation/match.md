@@ -2,9 +2,10 @@
  
 This guide covers using Blender to manually recreate the camera angles seen in clean feed Shoshinkai/B-roll footage. 
 The end goal is to have a camera within Blender at the same coordinates as the original footage, which can then be 
-used to recreate UVs, geometry, or textures.
+used to recreate UVs, geometry, or textures. This process takes time to get used to and you're not guaranteed good
+results on your first attempt.
  
-## Step 1: Correct reference bounds
+# Step 1: Correct reference bounds
  
 All video sources need to be corrected so that they fall within the same bounds you'd see on an emulator. 
 Skipping this step and trying to match against an uncorrected clip will give you incorrect results.
@@ -52,60 +53,79 @@ Not yet corrected:
 - La Saga Miyamoto
 - Cyberflash #32, #55, #170
   
-## Step 2: Find rough camera positions
-We will branch into 2 paths here (a, b). Both have unique applications.
+# Step 2: Find rough camera positions
  
-### a) Find camera position & rotation using in-game display
-*The following instructions assume you have a local clone of the showfloor repository set up and building.*
+## a) Find camera position & rotation using in-game display
  
-This method is ideal for lining up stages with unchanged geometry between early and final builds (CG, DDD, LLL, WF, etc)
+This method is ideal for lining up stages with unchanged geometry between early and final builds (CG, DDD, LLL, 
+WF, etc)
 
-To match the camera, we need to know where the in-game camera needs to sit to reproduce that framing. By default, you can't see camera coordinates,
-so we've set up an overlay and commented it out for ease of use.
- 
-Open up `camera.c` and find:
- 
-```c
-    // camera matching
-    /*
-    vec3f_get_dist_and_angle(c->focus, c->pos, &camDist, &camPitch, &camYaw);
-    
-    print_text_fmt_int(16, 48, "X%d", c->pos[0]);
-    print_text_fmt_int(16, 32, "Y%d", c->pos[2]);
-    print_text_fmt_int(16, 16, "Z%d", c->pos[1]);
+To match the camera, we need to know where the in-game camera needs to sit to reproduce that framing. Pressing 
+the L button during gameplay prints the camera's live X, Y, Z position and rotation to the bottom-left of the 
+screen.
 
-    print_text_fmt_int(96, 48, "X%d", 900 - (camPitch * 3600 / 0x10000));
-    print_text_fmt_int(96, 32, "Y%d", gLakituState.roll * 3600 / 0x10000);
-    print_text_fmt_int(96, 16, "Z%d", camYaw * 3600 / 0x10000);
-    */
+**_IMPORTANT:_** If you are already familiar with SM64's engine, you'll know that it has differences from Blender's 
+camera system; YZ is flipped, Y axis sign is inverted, and pitch is stored differently. Those have been accounted 
+for on the display, and this guide will refer to position and rotation with Blender's camera system.
 
-```
- 
-Uncomment and rebuild. This prints the camera's live X, Y, Z position to the bottom-left of the screen, updating in real time.
- 
-With that overlay active, boot showfloor and go to the level pictured in your reference. Put Mario in the same place as in the reference (or as close to the same place as possible) and rotate the camera until it matches. If the camera is being stubborn, center it, and then move perpendicularly to the area center to slowly turn in in your desired direction.
- 
-Once the framing matches, note down the X, Y, Z values on screen; those are the coordinates for that shot. If you are on a flat surface, make SPECIAL note of the Y value, and ensure that you do not change it.
- 
-### b) Find camera rotation using fSpy
- 
-This method is ideal for recreating completely unique geometry with no remnants in the final game or the gigaleak (e.g. Snow Slider, JRB, Ghost House)
- 
-## Step 3: Bring the camera into Blender
- 
-Regardless of which method you used in Step 2, the goal here is the same: end up with a camera in Blender positioned correctly relative to your reconstructed level geometry.
- 
-### a) Use collected coordinates to recreate angle
+Put Mario in the same place as in the reference (or as close to the same place as possible) and rotate the camera 
+until it matches. If the camera is being stubborn, center it, and slowly move perpendicular to the area center to 
+turn in in your desired direction.
 
+
+Once the framing matches, note down the values you see. If you are on a flat surface, make SPECIAL note of the Z 
+value, and ensure that you do not change it.
+ 
+## b) Find camera rotation using fSpy
+ 
+This method is ideal as a starting point for recreating completely unique geometry with no remnants in the final 
+game or the gigaleak (e.g. Snow Slider, JRB, Ghost House). 
+ 
+# Step 3: Bring the camera into Blender
+ 
+## a) Use collected coordinates to recreate angle
+
+- Ensure you have the Fast64 plugin installed in Blender
 - Navigate to the scene settings and set your resolution to any 4:3 resolution (e.g. 1440x1080)
-- Make sure your Blender is set to metric, (1 in-game unit is equal to 1 cm in Blender)
+- Make sure your Blender is set to metric (1 in-game unit is equal to 1 cm in Blender)
 
-- Create a new camera (Add > Camera)
+- Create a new camera (Add > Camera) and select it
 <img width="200" height="300" alt="image" src="https://github.com/user-attachments/assets/54157661-17f8-40e1-a6fc-8e98905217b9" />
 
 - In its settings, go to Lens, then change the lens unit from 'Milimeters' to 'Field of View'
-- If you are aligning a shot of the castle lobby (not one of the rooms), set the FOV to 79.4°. If it's any other stage, use 57.8°.
+- If you are aligning a shot of the castle lobby (not one of the rooms), set the FOV to 79.4°. If it's any other
+stage, use 57.8°
 - Under 'Background Images', click 'Add Image' and select your reference
+- Scroll down and ensure that "View as Render" is checked, opacity is set to 100%, and the image renders in FRONT
+of the model
+- In the transform tab, set the XYZ position and rotation to the values you previously collected
+- Keep in mind:
+  
+  `XYZ position = n / 100`
+  
+  `XYZ rotation = n / 10`
+  
+<img width="450" height="180" alt="image" src="https://github.com/user-attachments/assets/aaf92f56-150b-4536-9c59-5cf4b51ca824" />
+
+### _**Your camera is now aligned perfectly to your in-game coordinates!**_
+
+Depending on how good your shot was aligned, you might need to adjust position. When moving your camera, remember 
+a few crucial things:
+
+- DO NOT CHANGE THE Y ROTATION! IT IS ALWAYS ZERO (0) NO EXCEPTIONS
+
+- The game's internal resolution is 320x240. Some information will be lost, and sometimes aligning it seems impossible.
+You just have to get a feel for it... the following shot is aligned perfectly, but due to the resolution it looks like
+the top platform and the slope next to it are aligned wrong:
+<img width="318" height="250" alt="image" src="https://github.com/user-attachments/assets/3b2b5e26-4bfa-45b6-8456-255de48b04f1" />
+
+
+
+
+ 
+Always use a combination of checking edges with wireframe mode, and toggling visibility on/off in render preview mode to 
+verify your position.
+
 
 ### b) Import fSpy camera and adjust manually
  
