@@ -60,6 +60,9 @@ Not yet corrected:
 This method is ideal for lining up stages with unchanged geometry between early and final builds (CG, DDD, LLL, 
 WF, etc)
 
+Using coordinates directly from the game isn't always necessary, but it is highly reccomended. A situation in 
+which you might not need to grab new coordinates is if you already have a similar shot aligned in your blend.
+
 To match the camera, we need to know where the in-game camera needs to sit to reproduce that framing. Pressing 
 the L button during gameplay prints the camera's live X, Y, Z position and rotation to the bottom-left of the 
 screen.
@@ -70,11 +73,7 @@ for on the display, and this guide will refer to position and rotation with Blen
 
 Put Mario in the same place as in the reference (or as close to the same place as possible) and rotate the camera 
 until it matches. If the camera is being stubborn, center it, and slowly move perpendicular to the area center to 
-turn in in your desired direction.
-
-
-Once the framing matches, note down the values you see. If you are on a flat surface, make SPECIAL note of the Z 
-value, and ensure that you do not change it.
+turn in in your desired direction. Once the framing matches, note down the values you see.
  
 ## b) Find camera rotation using fSpy
  
@@ -114,18 +113,21 @@ a few crucial things:
 
 - DO NOT CHANGE THE Y ROTATION! IT IS ALWAYS ZERO (0) NO EXCEPTIONS
 
+- If you are on a flat surface, do not change the Z position
+
+- The most important parts of the camera to focus on are X rotation (yaw) and XY position. 
+
+- Adjusting the camera is something you have to get a feel for, don't be discouraged if you can't get it right away
+
 - The game's internal resolution is 320x240. Some information will be lost, and sometimes aligning it seems impossible.
 You just have to get a feel for it... the following shot is aligned perfectly, but due to the resolution it looks like
 the top platform and the slope next to it are aligned wrong:
 <img width="318" height="250" alt="image" src="https://github.com/user-attachments/assets/3b2b5e26-4bfa-45b6-8456-255de48b04f1" />
 
-
-
-
- 
-Always use a combination of checking edges with wireframe mode, and toggling visibility on/off in render preview mode to 
+- Always use a combination of checking edges with wireframe mode, and toggling visibility on/off in render preview mode to 
 verify your position.
 
+Good luck!
 
 ### b) Import fSpy camera and adjust manually
  
