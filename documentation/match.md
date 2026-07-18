@@ -54,6 +54,11 @@ Not yet corrected:
 - Cyberflash #32, #55, #170
   
 # Step 2: Find rough camera positions
+
+### IMPORTANT
+If you are already familiar with SM64's engine, you'll know that it has differences from Blender's 
+camera system; YZ is flipped, Y axis sign is inverted, and pitch is stored differently. Those have been accounted 
+for on the display, and this guide will refer to position and rotation with Blender's camera system.
  
 ## a) Find camera position & rotation using in-game display
  
@@ -66,10 +71,6 @@ which you might not need to grab new coordinates is if you already have a simila
 To match the camera, we need to know where the in-game camera needs to sit to reproduce that framing. Pressing 
 the L button during gameplay prints the camera's live X, Y, Z position and rotation to the bottom-left of the 
 screen.
-
-**_IMPORTANT:_** If you are already familiar with SM64's engine, you'll know that it has differences from Blender's 
-camera system; YZ is flipped, Y axis sign is inverted, and pitch is stored differently. Those have been accounted 
-for on the display, and this guide will refer to position and rotation with Blender's camera system.
 
 Put Mario in the same place as in the reference (or as close to the same place as possible) and rotate the camera 
 until it matches. If the camera is being stubborn, center it, and slowly move perpendicular to the area center to 
